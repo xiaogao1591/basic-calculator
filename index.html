@@ -56,7 +56,50 @@
     </div>
 
     <script>
-        // JavaScript code will go here
+        // Get references to the elements
+        const display = document.getElementById('display');
+        const buttons = document.querySelectorAll('.button');
+        const clearButton = document.getElementById('clear');
+
+        // Initialize a variable to store the current input
+        let currentInput = '';
+
+        // Function to update the display
+        function updateDisplay(value) {
+            display.value = value;
+        }
+
+        // Function to handle button clicks
+        function handleButtonClick(event) {
+            const buttonValue = event.target.textContent;
+
+            // Handle special buttons
+            if (buttonValue === 'C') {
+                // Clear the input
+                currentInput = '';
+                updateDisplay(currentInput);
+            } else if (buttonValue === '=') {
+                // Evaluate the expression
+                try {
+                    currentInput = eval(currentInput).toString();
+                    updateDisplay(currentInput);
+                } catch (error) {
+                    updateDisplay('Error');
+                }
+            } else {
+                // Append the button value to the current input
+                currentInput += buttonValue;
+                updateDisplay(currentInput);
+            }
+        }
+
+        // Add event listeners to the buttons
+        buttons.forEach(button => {
+            button.addEventListener('click', handleButtonClick);
+        });
+
+        // Add event listener to the clear button
+        clearButton.addEventListener('click', handleButtonClick);
     </script>
 </body>
 </html>
